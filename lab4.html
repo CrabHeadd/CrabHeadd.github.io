@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        
+        <script>
+            var name, item, amount, time, hours, arrivalDay, arrivalMonth, arrivalYear
+            time = new Date();
+            time.setDate(time.getDate() + 7);
+            hours = time.getHours();
+            arrivalDay = time.getDate();
+            arrivalMonth = time.getMonth() + 1;
+            arrivalYear = time.getFullYear();
+
+            alert("Welcome Customer");
+            name = prompt("What is your name?")
+            item = prompt("What would you like to order?")
+            amount = prompt("How many " + item + " would you like to order?")
+            if (hours < 12){
+                document.writeln("Good Morning " + name + ", thank you for ordering " + amount + ' ' + item )
+            }
+            else if ( hours < 18){
+                document.writeln("Good Afternoon " + name + ", thank you for ordering " + amount + ' ' + item )
+            }
+            else {
+                document.writeln("Good Evening " + name + ", thank you for ordering " + amount + ' ' + item ) 
+            }
+            document.writeln("<br>Your order will arrive on " + arrivalMonth + '/'+ arrivalDay + '/' + arrivalYear)
+        </script>
+    </head>
+    <body>
+        
+    </body>
+</html>
