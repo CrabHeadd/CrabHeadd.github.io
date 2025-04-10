@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet"href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+        <script src="https://code.jquery.com/jquery-latest.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+        <script>
+            function checkSpecialChar(pass) {
+                for (let index = 0; index < pass.length; index++) {
+                    if (pass.charAt(index) == '?' || pass.charAt(index) == '!'){ return true}
+                }
+                return false
+            }
+            function passwordReplacer(pass) {
+                let censoredPass = '';
+                for (let index = 0; index < pass.length; index++){
+                    censoredPass = censoredPass + '*';
+                }
+                return censoredPass;
+            }
+            function pleasework() {
+                var firstName = document.getElementById("fname")
+                var lastName = document.getElementById("lname")
+                var email = document.getElementById("email")
+                var dob = document.getElementById("date of birth")
+                var password = document.getElementById("password")
+                var alert = document.getElementById("hiddenAlert")
+
+                const fluidContainer = document.getElementById("fcontainer")
+
+                if (document.getElementById("alert")){document.getElementById("alert").remove()}
+
+                if (email.value == "" || lastName.value == "" || firstName.value == "" || password.value == "" || dob.value == "") {
+
+                    alert.innerHTML = "Please fill out all the necessary fields"
+                    alert.style.visibility = "visible"
+                }
+                else if(!checkSpecialChar(password.value)){
+
+                    alert.innerHTML = "Please include either a ? or ! in your password"
+                    alert.style.visibility = "visible"
+                }
+                else{
+                    alert.style.visibility = "hidden"
+                    var blurb = document.createElement("h1")
+                    var blurb2 = document.createElement("h2")
+                    blurb.innerHTML = "Registration Complete<br>Welcome " + 
+                    firstName.value + " " + lastName.value + "<br>You have inputted the following:"
+                    blurb2.innerHTML = "<br>Email - " + email.value + "<br><br>Date of Birth - " + 
+                    dob.value.toDateString() + "<br><br>Password - " + passwordReplacer(password.value)
+
+                    document.getElementById("UserInput").remove()
+                    document.getElementById("submit").remove()
+                    document.getElementById("deleteMe").remove()
+                    fluidContainer.appendChild(blurb)
+                    fluidContainer.appendChild(blurb2)
+                }
+            }
+        </script>
+    </head>
+    <body>
+        <div class="container" align = "center">
+            <div class="alert alert-warning" role="alert" id="hiddenAlert"></div>
+            <div class="jumbotron bg-" id="fcontainer">
+                <div class="row" id ="deleteMe">
+                    <div class="col-md-12">
+                        <h3>Please Input The Following Information</h3>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-offset-4 col-md-4">
+                        <form id="UserInput">
+                            <label for="fname" id="labelf">First Name</label><br>
+                            <input type="text" name="fname" id="fname"><br>
+                            <label for="lname" id="labell">Last Name</label><br>
+                            <input type="text" name="lname" id="lname"><br>
+                            <label for="email" id="labele">Email Address</label><br>
+                            <input type="text" name="email" id="email"><br>
+                            <label for="date of birth" id="labeld">Date of Birth</label><br>
+                            <input type="date" name="date of birth" id="date of birth"><br>
+                            <label for="password" id="labelp">Password</label><br>
+                            <input type="text" name="password" id="password"><br><br>
+                        </form>
+                        <button onclick="pleasework()" id="submit">Submit</button>
+                    </div>
+                </div>
+            </div>
+        <script>
+            document.getElementById("hiddenAlert").style.visibility = "hidden"
+        </script>
+    </body>
+</html>
