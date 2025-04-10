@@ -21,18 +21,19 @@
                 return censoredPass;
             }
             function pleasework() {
-                var firstName = document.getElementById("fname")
-                var lastName = document.getElementById("lname")
-                var email = document.getElementById("email")
-                var dob = document.getElementById("date of birth")
-                var password = document.getElementById("password")
-                var alert = document.getElementById("hiddenAlert")
+                const userInfo = {}
 
+                userInfo.firstName = document.getElementById("fname")
+                userInfo.lastName = document.getElementById("lname")
+                userInfo.email = document.getElementById("email")
+                userInfo.dob = document.getElementById("date of birth")
+                userInfo.password = document.getElementById("password")
+
+                var alert = document.getElementById("hiddenAlert")
                 const fluidContainer = document.getElementById("fcontainer")
 
-                if (document.getElementById("alert")){document.getElementById("alert").remove()}
-
-                if (email.value == "" || lastName.value == "" || firstName.value == "" || password.value == "" || dob.value == "") {
+                if (userInfo.email.value == "" || userInfo.lastName.value == "" || userInfo.firstName.value == "" 
+                || userInfo.password.value == "" || userInfo.dob.value == "") {
 
                     alert.innerHTML = "Please fill out all the necessary fields"
                     alert.style.visibility = "visible"
@@ -47,9 +48,9 @@
                     var blurb = document.createElement("h1")
                     var blurb2 = document.createElement("h2")
                     blurb.innerHTML = "Registration Complete<br>Welcome " + 
-                    firstName.value + " " + lastName.value + "<br>You have inputted the following:"
-                    blurb2.innerHTML = "<br>Email - " + email.value + "<br><br>Date of Birth - " + 
-                    dob.value.toDateString() + "<br><br>Password - " + passwordReplacer(password.value)
+                    userInfo.firstName.value + " " + userInfo.lastName.value + "<br>You have inputted the following:"
+                    blurb2.innerHTML = "<br>Email - " + userInfo.email.value + "<br><br>Date of Birth - " + 
+                    userInfo.dob.value + "<br><br>Password - " + passwordReplacer(userInfo.password.value)
 
                     document.getElementById("UserInput").remove()
                     document.getElementById("submit").remove()
