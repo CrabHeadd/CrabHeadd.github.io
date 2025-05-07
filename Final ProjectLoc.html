@@ -12,27 +12,17 @@
 
             async function getData() {
 
-                var type = document.querySelector('input[name="type"]:checked'), order = document.querySelector('input[name="order"]:checked'), url
-                var typeANS = type.value, orderANS = order.value, fil = "&filters[name][$startsWithi]=" + document.getElementById("searchInput").value
+                var order = document.querySelector('input[name="order"]:checked'), url
+                var orderANS = order.value, fil = "&filters[name][$startsWithi]=" + document.getElementById("searchInput").value
 
-                switch (typeANS) {
-                    case "0":
-                        if (orderANS == "1") {
-                            url = "https://api.batmanapi.com/v1/locations/?sort=name:asc&pagination[pageSize]=49" + fil
-                        } else{
-                            url = "https://api.batmanapi.com/v1/locations/?sort=name:desc&pagination[pageSize]=49" + fil
-                        }
-                        break;
-                
+                switch (orderANS) {
                     case "1":
-                        if (orderANS == "1") {
-                            url = "https://api.batmanapi.com/v1/locations/?sort=alias:asc&pagination[pageSize]=49" + fil
-                        } else{
-                            url = "https://api.batmanapi.com/v1/locations/?sort=alias:desc&pagination[pageSize]=49" + fil
-                        }
+                        url = "https://api.batmanapi.com/v1/locations/?sort=name:asc&pagination[pageSize]=49" + fil
                         break;
-                    }
-
+                    case "0":
+                        url = "https://api.batmanapi.com/v1/locations/?sort=name:desc&pagination[pageSize]=49" + fil
+                        break;
+                }
                 const options = {method: 'GET'}
                 const response = await fetch(url, options), result = await response.text()
                 data = JSON.parse(result)
@@ -47,7 +37,7 @@
                     if (dup.ace){duplicateFound = true}
                     dup.ace = true
                 }
-                if ((data[index].attributes.name=="Cave of The Bat"||data[index].attributes.name=="Batcave")){
+                if ((data[index].attributes.name=="Cave of the Bat"||data[index].attributes.name=="Batcave")){
                     if (dup.bat){duplicateFound = true}
                     dup.bat = true
                 }
@@ -77,11 +67,14 @@
                     if (duplicateFinder(duplicates,index)){
 
                         var thumbnail = document.createElement("div"), image = document.createElement("img"), title = document.createElement("h1")
-                        var col = document.createElement("div"), caption = document.createElement("div")
-                        var row = document.createElement("div"), name = data[index].attributes.name
+                        var col = document.createElement("div"), caption = document.createElement("div"), desc = document.createElement("p")
+                        var row = document.createElement("div"), name = data[index].attributes.name, description = data[index].attributes.description
                         const code = "row" + Math.floor(rowIndex/perRow)
                         
-                        if (name == "Cave of the Bat"){name = "Batcave"}
+                        if (name == "Cave of the Bat"){
+                            name = "Batcave"
+                            description = "The secret headquarters of Batman located beneath Wayne Manor."
+                        }
                         if (name == "Ace Chemical Processing Plant"){name = "Ace Chemicals"}
                         if (name == "Park Row"){name = "Crime Alley"}
                         if (name == "The Bowery"){name = "Bowery"}
@@ -96,8 +89,12 @@
                         caption.classList.add("caption")
                         title.innerHTML = name
                         title.style.color = "rgb(0, 0, 0)"
+                        desc.innerHTML = data[index].attributes.description
+                        desc.style.color = "black"
 
+                        
                         caption.appendChild(title)
+                        caption.appendChild(desc)
                         thumbnail.appendChild(image)
                         thumbnail.appendChild(caption)
                         col.appendChild(thumbnail)
@@ -119,6 +116,12 @@
         </script>
     </head>
     <body style="background-color: rgb(2, 33, 142);">
+
+        <ol class="breadcrumb" style="background-color: rgb(77, 85, 87); border: 2px solid rgb(228, 220, 0);">
+            <li class="active" style="color: black;">Locations</li>
+            <li><a href="./Final Project.html " style="color: rgb(228, 220, 0);">Characters</a></li>
+        </ol>
+
         <div class="container">
             <div class="jumbotron" style="background-color: rgb(77, 85, 87); border: 2px solid rgb(228, 220, 0);">
                 <div align="center">
@@ -127,18 +130,7 @@
                         <input type="text" id="searchInput" name="ser">
                     </form>
                 </div>
-                <div class="row">
-                    <div class="col-md-offset-3 col-md-5">
-                        <form id="type">
-                            <h3>
-                                <input type="radio" id="Name-Alpha" value="0" checked="checked" name="type">
-                                <label for="Name-Alpha" style="color: rgb(0, 0, 0);">Name</label><br>
-                                <input type="radio" id="Alias-Alpha" value="1" name="type">
-                                <label for="Alias-Alpha" style="color: rgb(0, 0, 0);">Alias</label>
-                            </h3>
-                        </form>
-                    </div>
-                    <div class="col-md-4">
+                <div align="center">
                         <form id="order">
                             <h3>
                                 <input type="radio" id="asc" value="0" name="order">
@@ -147,7 +139,6 @@
                                 <label for="desc" style="color: rgb(0, 0, 0);">Descending</label>
                             </h3>
                         </form>
-                    </div>
                 </div>
                 <div align="center">
                     <h3><button onclick="getData()" id="submit" style="color: black;">Submit</button></h3>
