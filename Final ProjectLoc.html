@@ -81,13 +81,14 @@
                         var row = document.createElement("div"), name = data[index].attributes.name, description = data[index].attributes.description
                         const code = "row" + Math.floor(rowIndex/perRow)
                         
-                        if (name == "Cave of the Bat"){
-                            name = "Batcave"
+                        if (name == "Cave of the Bat" || name == "Batcave"){
+                            name = "Batcave (Cave of the Bat)"
                             description = "The secret headquarters of Batman located beneath Wayne Manor."
                         }
                         if (name == "Ace Chemical Processing Plant"){name = "Ace Chemicals"}
-                        if (name == "Park Row"){name = "Crime Alley"}
-                        if (name == "The Bowery"){name = "Bowery"}
+                        if (name == "Park Row" || name == "Crime Alley"){name = "Crime Alley (Park Row)"}
+                        if (name == "The Bowery" || name == "Bowery"){name = "(The) Bowery"}
+
                         col.classList.add("col-md-" + 12/perRow)
                         thumbnail.classList.add("thumbnail")
                         thumbnail.style.backgroundColor = "rgb(77, 85, 87)"

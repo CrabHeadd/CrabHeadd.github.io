@@ -99,12 +99,12 @@
                         var row = document.createElement("div"), name = data[index].attributes.name
                         const code = "row" + Math.floor(rowIndex/perRow)
                         
-                        if (name == "Mr. Zsasz"){name = "Zsasz"}
+                        if (name == "Mr. Zsasz" || name == "Zsasz"){name = "(Mr.) Zsasz"}
                         col.classList.add("col-md-" + 12/perRow)
                         thumbnail.classList.add("thumbnail")
                         thumbnail.style.backgroundColor = "rgb(77, 85, 87)"
                         thumbnail.style.borderColor = "rgb(228, 220, 0)"
-                        image.src = "./characters/" + name + ".png"
+                        image.src = "./characters/" + data[index].attributes.name + ".png"
                         image.style.width = "100%";
                         image.style.height = "650px";
                         image.style.objectFit = "cover";
