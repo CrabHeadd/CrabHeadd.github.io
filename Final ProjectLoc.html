@@ -11,23 +11,33 @@
             var data
 
             async function getData() {
+                try{
+                    var order = document.querySelector('input[name="order"]:checked'), url
+                    var orderANS = order.value, fil = "&filters[name][$startsWithi]=" + document.getElementById("searchInput").value
 
-                var order = document.querySelector('input[name="order"]:checked'), url
-                var orderANS = order.value, fil = "&filters[name][$startsWithi]=" + document.getElementById("searchInput").value
-
-                switch (orderANS) {
-                    case "1":
-                        url = "https://api.batmanapi.com/v1/locations/?sort=name:asc&pagination[pageSize]=49" + fil
-                        break;
-                    case "0":
-                        url = "https://api.batmanapi.com/v1/locations/?sort=name:desc&pagination[pageSize]=49" + fil
-                        break;
+                    switch (orderANS) {
+                        case "1":
+                            url = "https://api.batmanapi.com/v1/locations/?sort=name:asc&pagination[pageSize]=49" + fil
+                            break;
+                        case "0":
+                            url = "https://api.batmanapi.com/v1/locations/?sort=name:desc&pagination[pageSize]=49" + fil
+                            break;
+                    }
+                    const options = {method: 'GET'}
+                    const response = await fetch(url, options), result = await response.text()
+                    if (response.ok) {
+                        data = JSON.parse(result)
+                        data = data.data 
+                        sortData(3);
+                    } else{throw new Error('Failed to fetch data');}
+                } catch (error){
+                    var di = document.createElement("div")
+                    di.style.textAlign = "center"
+                    var er = document.createElement("p")
+                    er.style.color = "black"
+                    er.innerHTML = 'Error:'+ error
+                    document.getElementById("body").appendChild(er)
                 }
-                const options = {method: 'GET'}
-                const response = await fetch(url, options), result = await response.text()
-                data = JSON.parse(result)
-                data = data.data
-                sortData(3);
             }
 
 

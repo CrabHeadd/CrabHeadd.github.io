@@ -11,33 +11,42 @@
             var data
 
             async function getData() {
+                try{
+                    var type = document.querySelector('input[name="type"]:checked'), order = document.querySelector('input[name="order"]:checked'), url
+                    var typeANS = type.value, orderANS = order.value, fil = "&filters[name][$startsWithi]=" + document.getElementById("searchInput").value
 
-                var type = document.querySelector('input[name="type"]:checked'), order = document.querySelector('input[name="order"]:checked'), url
-                var typeANS = type.value, orderANS = order.value, fil = "&filters[name][$startsWithi]=" + document.getElementById("searchInput").value
-
-                switch (typeANS) {
-                    case "0":
-                        if (orderANS == "1") {
-                            url = "https://api.batmanapi.com/v1/characters/?sort=name:asc&pagination[pageSize]=83" + fil
-                        } else{
-                            url = "https://api.batmanapi.com/v1/characters/?sort=name:desc&pagination[pageSize]=83" + fil
+                    switch (typeANS) {
+                        case "0":
+                            if (orderANS == "1") {
+                                url = "https://api.batmanapi.com/v1/characters/?sort=name:asc&pagination[pageSize]=83" + fil
+                            } else{
+                                url = "https://api.batmanapi.com/v1/characters/?sort=name:desc&pagination[pageSize]=83" + fil
+                            }
+                            break;
+                    
+                        case "1":
+                            if (orderANS == "1") {
+                                url = "https://api.batmanapi.com/v1/characters/?sort=alias:asc&pagination[pageSize]=83" + fil
+                            } else{
+                                url = "https://api.batmanapi.com/v1/characters/?sort=alias:desc&pagination[pageSize]=83" + fil
+                            }
+                            break;
                         }
-                        break;
-                
-                    case "1":
-                        if (orderANS == "1") {
-                            url = "https://api.batmanapi.com/v1/characters/?sort=alias:asc&pagination[pageSize]=83" + fil
-                        } else{
-                            url = "https://api.batmanapi.com/v1/characters/?sort=alias:desc&pagination[pageSize]=83" + fil
-                        }
-                        break;
-                    }
-
-                const options = {method: 'GET'}
-                const response = await fetch(url, options), result = await response.text()
-                data = JSON.parse(result)
-                data = data.data
-                sortData(3);
+                        const options = {method: 'GET'}
+                        const response = await fetch(url, options), result = await response.text()
+                        if (response.ok){
+                            data = JSON.parse(result)
+                            data = data.data
+                            sortData(3);
+                        } else{throw new Error('Failed to fetch data');}
+                } catch (error){
+                    var di = document.createElement("div")
+                    di.style.textAlign = "center"
+                    var er = document.createElement("p")
+                    er.style.color = "black"
+                    er.innerHTML = 'Error:'+ error
+                    document.getElementById("body").appendChild(er)
+                }
             }
 
 
