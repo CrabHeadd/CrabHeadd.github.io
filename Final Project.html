@@ -92,7 +92,7 @@
                 document.getElementById("body").appendChild(div)
 
                 for (let index = 0; index < data.length; index++) {
-                    if (duplicateFinder(duplicates,index)){
+                    if (duplicateFinder(duplicates,index) && data[index].attributes.name != "Bat-Cow"){
 
                         var thumbnail = document.createElement("div"), image = document.createElement("img"), title = document.createElement("h1")
                         var col = document.createElement("div"), caption = document.createElement("div"), alias = document.createElement("h2")
